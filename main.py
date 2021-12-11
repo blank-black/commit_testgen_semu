@@ -74,7 +74,8 @@ def main():
                               help="only generate tests, no mutant execution")
     parser.add_argument('--no_summary', action="store_true", \
                               help="Disable Summary")
-
+    parser.add_argument('--only_collect_seeds', action="store_true", \
+                              help="Collect seeds only")
     args = parser.parse_args()
     outdir = os.path.abspath(args.outdir)
     original_conf = os.path.abspath(args.original_conf)
@@ -125,6 +126,11 @@ def main():
         cp_data[MUTANT_EXECUTION_PREPA] = True
         cp_data[MUTANT_EXECUTION] = True
     if args.no_summary:
+        cp_data[DATA_SUMMARIZATION] = True
+    if args.only_collect_seeds:
+        cp_data[MUTANT_EXECUTION_PREPA] = True
+        cp_data[MUTANT_EXECUTION] = True
+        cp_data[TEST_GENERATION] = True
         cp_data[DATA_SUMMARIZATION] = True
 
     if os.path.isfile (checkpoint_file):
